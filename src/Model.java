@@ -18,11 +18,11 @@ public class Model extends JPanel{
     double particleRadius = 75;
     public boolean isPainted = Boolean.FALSE;
     public ArrayList<RayPaths> rays = new ArrayList<>();
-    public ArrayList<Particle> particle = new ArrayList<>();
+    public ArrayList<Particle> particles = new ArrayList<>();
     public ArrayList<Point2D.Double> intersections = new ArrayList<>();
 
     private Ellipse2D outerEdge;
-    private double radius = 0;
+    public double radius = 0;
 
     public ArrayList<Double> entropies = new ArrayList<>();
     public ArrayList<Double> distances = new ArrayList<>();
@@ -61,11 +61,11 @@ public class Model extends JPanel{
 
             double xObject1 = r * Math.cos(0) + radius + padding;
             double yObject1 = r * Math.sin(0) + radius + padding;
-            particle.add(new Particle(new Point2D.Double(xObject1,yObject1), particleRadius));
+            particles.add(new Particle(new Point2D.Double(xObject1,yObject1), particleRadius));
 
 
             double xObject2 = r * Math.cos(Math.PI) + radius + padding;
-            particle.add(new Particle(new Point2D.Double(xObject2,yObject1), particleRadius));
+            particles.add(new Particle(new Point2D.Double(xObject2,yObject1), particleRadius));
 
             System.out.println(xObject1 + " , " + yObject1 + " and " + xObject2 + " , " + yObject1);
             // g2.setStroke(new BasicStroke(1));
@@ -84,7 +84,7 @@ public class Model extends JPanel{
                 Line2D temp = new Line2D.Double(start.getX(), start.getY(), end.getX(), end.getY());
                 RayPaths currentRay = (new RayPaths(start, end, Boolean.FALSE));
                 for (int j = 0; j < PARTICLE_NUM; j++){
-                    if(Math.abs(temp.ptLineDist(particle.get(j).getX(), particle.get(j).getY())) < particleRadius){
+                    if(Math.abs(temp.ptLineDist(particles.get(j).getX(), particles.get(j).getY())) < particleRadius){
                         currentRay.setDrawn(Boolean.FALSE);
                         break;
                     }
@@ -107,7 +107,7 @@ public class Model extends JPanel{
                 }
             }
 
-            Double distance = particle.get(0).distance(particle.get(1));
+            Double distance = particles.get(0).distance(particles.get(1));
             Double entropy = calculateEntropy();
             distances.add(distance);
             entropies.add(entropy);
@@ -118,10 +118,9 @@ public class Model extends JPanel{
             g2.setColor(OBJECT_COLOR);
             g2.setStroke(new BasicStroke(2));
             for(int ob = 0; ob < PARTICLE_NUM; ob++){
-                g2.draw(objectsToDraw.get(ob));
+                g2.draw(particles.get(ob).particleAsCircle());
             }
             g2.setStroke(new BasicStroke(1));
-
             isPainted = Boolean.TRUE;
 
         }
@@ -140,7 +139,7 @@ public class Model extends JPanel{
                 Line2D temp = new Line2D.Double(start.getX(), start.getY(), end.getX(), end.getY());
                 RayPaths currentRay = (new RayPaths(start, end, Boolean.FALSE));
                 for (int j = 0; j < PARTICLE_NUM; j++){
-                    if(Math.abs(temp.ptLineDist(particle.get(j).getX(), particle.get(j).getY())) < particleRadius){
+                    if(Math.abs(temp.ptLineDist(particles.get(j).getX(), particles.get(j).getY())) < particleRadius){
                         currentRay.setDrawn(Boolean.FALSE);
                         break;
                     }
@@ -162,7 +161,7 @@ public class Model extends JPanel{
                     g2.draw(temp);
                 }
             }
-            Double distance = particle.get(0).distance(particle.get(1));
+            Double distance = particles.get(0).distance(particles.get(1));
             Double entropy = calculateEntropy();
             distances.add(distance);
             entropies.add(entropy);
@@ -173,7 +172,9 @@ public class Model extends JPanel{
             g2.setColor(OBJECT_COLOR);
             g2.setStroke(new BasicStroke(2));
             for(int ob = 0; ob < PARTICLE_NUM; ob++){
-                g2.draw(objectsToDraw.get(ob));
+                System.out.println(particles.get(ob).getX() + " " + particles.get(ob).getY());
+                g2.draw(particles.get(ob).particleAsCircle());
+                System.out.println(particles.get(ob).getX() + " " + particles.get(ob).getY());
             }
             g2.setStroke(new BasicStroke(1));
             System.out.println("after painting updated " + rays.size());
@@ -196,9 +197,17 @@ public class Model extends JPanel{
     }
 
     public void update(int batchSize, Boolean random){
+        Double regionRadius = (double) Math.min(this.getWidth(), this.getHeight()) / 2 - 10 * 2;
         for( int iter = 0; iter < batchSize; iter++){
             // update selects a random ray from the rays and flips update if it is not intersecting
-            //updateObject();
+            double centreX = outerEdge.getCenterX();
+            double centreY = outerEdge.getCenterY();
+            Point2D.Double regionCentre =  new Point2D.Double(centreX, centreY);
+            for(Particle particle : particles){
+                System.out.println(particle.getX() + " in update " + particle.getY() + " v " + particle.getVx());
+                particle.move(regionRadius, regionCentre);
+                System.out.println(particle.getX() + " post update" + particle.getY() + " v " + particle.getVx());
+            }
 
 
             double index = getRandomNumber(0, RAYS_NUM - 1);
@@ -213,7 +222,7 @@ public class Model extends JPanel{
             }
             else{
                 for (int j = 0; j < PARTICLE_NUM; j++){
-                    if(Math.abs(temp.ptLineDist(particle.get(j).getX(), particle.get(j).getY())) < particleRadius){
+                    if(Math.abs(temp.ptLineDist(particles.get(j).getX(), particles.get(j).getY())) < particleRadius){
                         currentRay.setDrawn(Boolean.FALSE);
                         break;
                     }
@@ -224,7 +233,7 @@ public class Model extends JPanel{
             for (int j = 0; j < PARTICLE_NUM; j++){
                 for(RayPaths checkRays : rays){
                     Line2D checkLine = new Line2D.Double(checkRays.startPoint.getX(), checkRays.startPoint.getY(), checkRays.endPoint.getX(), checkRays.endPoint.getY());
-                    if(Math.abs(checkLine.ptLineDist(particle.get(j).getX(), particle.get(j).getY())) < particleRadius){
+                    if(Math.abs(checkLine.ptLineDist(particles.get(j).getX(), particles.get(j).getY())) < particleRadius){
                         checkRays.setDrawn(Boolean.FALSE);
                     }
                 }

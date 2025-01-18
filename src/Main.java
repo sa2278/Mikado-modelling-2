@@ -27,7 +27,7 @@ public class Main {
         frame.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER){
-                    //model.update(stepSize, Boolean.FALSE);
+                    model.update(stepSize, Boolean.FALSE);
                     frame.repaint();
                 }
                 if (e.getKeyCode() == KeyEvent.VK_R){
@@ -35,7 +35,7 @@ public class Main {
                     frame.repaint();
                 }
                 if (e.getKeyCode() == KeyEvent.VK_SPACE){
-                    ArrayList<Double> entrop = new ArrayList<>(model.entropies);
+                    ArrayList<Double> entropy = new ArrayList<>(model.entropies);
                     ArrayList<Double> dists = new ArrayList<>(model.distances);
                     try{
                         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss_SS");
@@ -45,7 +45,7 @@ public class Main {
                         for(int i = 0; i < dists.size(); i ++){
                             fileWriter.append(String.valueOf(dists.get(i)));
                             fileWriter.append(",");
-                            fileWriter.append(String.valueOf(entrop.get(i)));
+                            fileWriter.append(String.valueOf(entropy.get(i)));
                             fileWriter.append("\n");
 
 

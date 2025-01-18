@@ -16,10 +16,10 @@ public class Particle {
         this.vy = rand.nextDouble() * 2 - 1; // Random velocity y
     }
 
-    public void move(Double circleRadius){
+    public void move(Double circleRadius, Point2D.Double regionCentre){
         centre.x += vx;
         centre.y += vy;
-        if (Math.sqrt(centre.x * centre.x + centre.y * centre.y) + radius - 4 > circleRadius){
+        if (centre.distance(regionCentre)  > circleRadius - radius - 4){
             vx = -vx;
             vy = -vy;
         }
@@ -37,4 +37,15 @@ public class Particle {
         return new Ellipse2D.Double(centre.getX() - radius, centre.getY() - radius, radius * 2, radius * 2);
     }
 
+    public Double distance(Particle p2){
+        return centre.distance(p2.centre);
+    }
+
+    public double getVx() {
+        return vx;
+    }
+
+    public double getVy() {
+        return vy;
+    }
 }
