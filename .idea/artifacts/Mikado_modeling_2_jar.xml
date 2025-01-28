@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact name="Mikado-modeling-2:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Mikado_modeling_2_jar</output-path>
+    <root id="root">
+      <element id="archive" name="Mikado-modeling-2.jar">
+        <element id="module-output" name="Mikado-modeling-2" />
+      </element>
+    </root>
+  </artifact>
+</component>

@@ -59,6 +59,7 @@ public class Model extends JPanel{
 
             double r = (radius - particleRadius - 4);
 
+            // in this case the diameter of each circle is 125
             double xObject1 = r * Math.cos(0) + radius + padding;
             double yObject1 = r * Math.sin(0) + radius + padding;
             particles.add(new Particle(new Point2D.Double(xObject1,yObject1), particleRadius));
@@ -172,9 +173,7 @@ public class Model extends JPanel{
             g2.setColor(OBJECT_COLOR);
             g2.setStroke(new BasicStroke(2));
             for(int ob = 0; ob < PARTICLE_NUM; ob++){
-                System.out.println(particles.get(ob).getX() + " " + particles.get(ob).getY());
                 g2.draw(particles.get(ob).particleAsCircle());
-                System.out.println(particles.get(ob).getX() + " " + particles.get(ob).getY());
             }
             g2.setStroke(new BasicStroke(1));
             System.out.println("after painting updated " + rays.size());
@@ -203,11 +202,18 @@ public class Model extends JPanel{
             double centreX = outerEdge.getCenterX();
             double centreY = outerEdge.getCenterY();
             Point2D.Double regionCentre =  new Point2D.Double(centreX, centreY);
-            for(Particle particle : particles){
-                System.out.println(particle.getX() + " in update " + particle.getY() + " v " + particle.getVx());
-                particle.move(regionRadius, regionCentre);
-                System.out.println(particle.getX() + " post update" + particle.getY() + " v " + particle.getVx());
+            if(random){
+                for(Particle particle : particles){
+                    particle.move(regionRadius, regionCentre);
+                }
             }
+            else{
+                for(Particle particle : particles){
+                    particle.moveHorizontal(regionRadius, regionCentre);
+                }
+
+            }
+
 
 
             double index = getRandomNumber(0, RAYS_NUM - 1);

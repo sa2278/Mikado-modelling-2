@@ -26,36 +26,36 @@ public class Main {
         // System.out.println("in main " + model.rays.size());
         frame.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER){
-                    model.update(stepSize, Boolean.FALSE);
-                    frame.repaint();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_R){
-                    //model.update(stepSize, Boolean.TRUE);
-                    frame.repaint();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_SPACE){
-                    ArrayList<Double> entropy = new ArrayList<>(model.entropies);
-                    ArrayList<Double> dists = new ArrayList<>(model.distances);
-                    try{
-                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss_SS");
-                        FileWriter fileWriter = new FileWriter("Entropy_output" + formatter.format(new Date()) +".csv");
-                        fileWriter.append("Distance,Log_Entropy");
+            if (e.getKeyCode() == KeyEvent.VK_ENTER){
+                model.update(stepSize, Boolean.FALSE);
+                frame.repaint();
+            }
+            if (e.getKeyCode() == KeyEvent.VK_R){
+                model.update(stepSize, Boolean.TRUE);
+                frame.repaint();
+            }
+            if (e.getKeyCode() == KeyEvent.VK_SPACE){
+                ArrayList<Double> entropy = new ArrayList<>(model.entropies);
+                ArrayList<Double> dists = new ArrayList<>(model.distances);
+                try{
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss_SS");
+                    FileWriter fileWriter = new FileWriter("Entropy_output" + formatter.format(new Date()) +".csv");
+                    fileWriter.append("Distance,Log_Entropy");
+                    fileWriter.append("\n");
+                    for(int i = 0; i < dists.size(); i ++){
+                        fileWriter.append(String.valueOf(dists.get(i)));
+                        fileWriter.append(",");
+                        fileWriter.append(String.valueOf(entropy.get(i)));
                         fileWriter.append("\n");
-                        for(int i = 0; i < dists.size(); i ++){
-                            fileWriter.append(String.valueOf(dists.get(i)));
-                            fileWriter.append(",");
-                            fileWriter.append(String.valueOf(entropy.get(i)));
-                            fileWriter.append("\n");
 
 
-                        }
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
                     }
-
-
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
                 }
+
+
+            }
 
 
 

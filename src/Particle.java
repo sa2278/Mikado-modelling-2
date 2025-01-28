@@ -8,6 +8,7 @@ public class Particle {
     private double vx, vy;
     private Double radius;
     private Random rand = new Random();
+    private Double horizVX = 0.5;
 
     public Particle(Point2D.Double centre, Double radius){
         this.centre = centre;
@@ -19,9 +20,19 @@ public class Particle {
     public void move(Double circleRadius, Point2D.Double regionCentre){
         centre.x += vx;
         centre.y += vy;
+        // on the colision with the border, there is a minor random offset of between -0.1 to 0.1 to simulate a random bounce
         if (centre.distance(regionCentre)  > circleRadius - radius - 4){
-            vx = -vx;
-            vy = -vy;
+            double angle = Math.atan2(centre.getX() - regionCentre.getX(), centre.getY() - regionCentre.getY());
+            vx = -vx + ((rand.nextDouble() * 2 - 1) / 10);
+            vy = -vy + ((rand.nextDouble() * 2 - 1) / 10);
+        }
+    }
+
+    public void moveHorizontal(Double circleRadius, Point2D.Double regionCentre){
+        centre.x += horizVX;
+        // on the colision with the border, there is a minor random offset of between -0.1 to 0.1 to simulate a random bounce
+        if (centre.distance(regionCentre)  > circleRadius - radius - 4){
+            horizVX = -horizVX;
         }
     }
 
