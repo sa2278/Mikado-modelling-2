@@ -26,13 +26,39 @@ public class Main {
         // System.out.println("in main " + model.rays.size());
         frame.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
-            if (e.getKeyCode() == KeyEvent.VK_ENTER){
+            if (e.getKeyCode() == KeyEvent.VK_Q){
                 model.update(stepSize, Boolean.FALSE);
                 frame.repaint();
             }
-            if (e.getKeyCode() == KeyEvent.VK_R){
+            if (e.getKeyCode() == KeyEvent.VK_E){
                 model.update(stepSize, Boolean.TRUE);
-                frame.repaint();
+                SwingUtilities.invokeLater(frame::repaint);
+            }
+            if (e.getKeyCode() == KeyEvent.VK_A){
+                int loopCount = 100000;
+                for(int i = 0; i < loopCount; i++){
+                    model.update(stepSize, Boolean.FALSE);
+                    SwingUtilities.invokeLater(frame::repaint);
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                }
+            }
+            if (e.getKeyCode() == KeyEvent.VK_D){
+                int loopCount = 100000;
+                for(int i = 0; i < loopCount; i++){
+                    model.update(stepSize, Boolean.TRUE);
+                    SwingUtilities.invokeLater(frame::repaint);
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                }
             }
             if (e.getKeyCode() == KeyEvent.VK_SPACE){
                 ArrayList<Double> entropy = new ArrayList<>(model.entropies);

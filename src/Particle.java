@@ -22,7 +22,6 @@ public class Particle {
         centre.y += vy;
         // on the colision with the border, there is a minor random offset of between -0.1 to 0.1 to simulate a random bounce
         if (centre.distance(regionCentre)  > circleRadius - radius - 4){
-            double angle = Math.atan2(centre.getX() - regionCentre.getX(), centre.getY() - regionCentre.getY());
             vx = -vx + ((rand.nextDouble() * 2 - 1) / 10);
             vy = -vy + ((rand.nextDouble() * 2 - 1) / 10);
         }
