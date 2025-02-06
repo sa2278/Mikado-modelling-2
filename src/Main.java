@@ -24,39 +24,49 @@ public class Main {
         frame.setVisible(true);
         // TODO remove this
         // System.out.println("in main " + model.rays.size());
+        final int[] qNum = {0};
+        final int[] eNum = {0};
+
         frame.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
+
             if (e.getKeyCode() == KeyEvent.VK_Q){
                 model.update(stepSize, Boolean.FALSE);
                 frame.repaint();
+                qNum[0] += 1;
+                System.out.println(qNum[0]);
             }
             if (e.getKeyCode() == KeyEvent.VK_E){
                 model.update(stepSize, Boolean.TRUE);
-                SwingUtilities.invokeLater(frame::repaint);
+                frame.repaint();
+                eNum[0] += 1;
+                System.out.println(eNum[0]);
             }
             if (e.getKeyCode() == KeyEvent.VK_A){
-                int loopCount = 100000;
+                int loopCount = 1000;
                 for(int i = 0; i < loopCount; i++){
                     model.update(stepSize, Boolean.FALSE);
-                    SwingUtilities.invokeLater(frame::repaint);
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(1000);
                     } catch (InterruptedException ex) {
                         throw new RuntimeException(ex);
                     }
+                    frame.repaint();
+                    System.out.println(i + " " + model.entropies.get(0) + "\n");
 
                 }
             }
+
             if (e.getKeyCode() == KeyEvent.VK_D){
-                int loopCount = 100000;
+                int loopCount = 1000;
                 for(int i = 0; i < loopCount; i++){
                     model.update(stepSize, Boolean.TRUE);
-                    SwingUtilities.invokeLater(frame::repaint);
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(1000);
                     } catch (InterruptedException ex) {
                         throw new RuntimeException(ex);
                     }
+                    frame.repaint();
 
                 }
             }
@@ -76,9 +86,11 @@ public class Main {
 
 
                     }
+                    fileWriter.close();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
+
 
 
             }
