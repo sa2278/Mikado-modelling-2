@@ -24,8 +24,6 @@ public class Main {
         frame.setVisible(true);
         // TODO remove this
         // System.out.println("in main " + model.rays.size());
-        final int[] qNum = {0};
-        final int[] eNum = {0};
 
         frame.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
@@ -33,14 +31,10 @@ public class Main {
             if (e.getKeyCode() == KeyEvent.VK_Q){
                 model.update(stepSize, Boolean.FALSE);
                 frame.repaint();
-                qNum[0] += 1;
-                System.out.println(qNum[0]);
             }
             if (e.getKeyCode() == KeyEvent.VK_E){
                 model.update(stepSize, Boolean.TRUE);
                 frame.repaint();
-                eNum[0] += 1;
-                System.out.println(eNum[0]);
             }
             if (e.getKeyCode() == KeyEvent.VK_A){
                 int loopCount = 1000;

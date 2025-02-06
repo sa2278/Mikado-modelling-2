@@ -60,12 +60,12 @@ public class Model extends JPanel{
             double r = (radius - particleRadius - 4);
 
             // in this case the diameter of each circle is 125
-            double xObject1 = r * Math.cos(0) + radius + padding;
-            double yObject1 = r * Math.sin(0) + radius + padding;
+            double xObject1 = outerEdge.getCenterX();
+            double yObject1 = outerEdge.getCenterY();
             particles.add(new Particle(new Point2D.Double(xObject1,yObject1), particleRadius));
 
 
-            double xObject2 = r * Math.cos(Math.PI) + radius + padding;
+            double xObject2 = outerEdge.getCenterX();
             particles.add(new Particle(new Point2D.Double(xObject2,yObject1), particleRadius));
 
             System.out.println(xObject1 + " , " + yObject1 + " and " + xObject2 + " , " + yObject1);
@@ -162,10 +162,13 @@ public class Model extends JPanel{
                     g2.draw(temp);
                 }
             }
+
             Double distance = particles.get(0).distance(particles.get(1));
             Double entropy = calculateEntropy();
             distances.add(distance);
             entropies.add(entropy);
+
+            System.out.println(distances.size());
 
             g2.setStroke(new BasicStroke(4));
             g2.setColor(Color.BLACK);
