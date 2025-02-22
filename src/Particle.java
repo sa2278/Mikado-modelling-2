@@ -1,6 +1,5 @@
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Particle {
@@ -27,12 +26,22 @@ public class Particle {
         }
     }
 
-    public void moveHorizontal(Double circleRadius, Point2D.Double regionCentre){
-        centre.x += horizVX;
-        // on the colision with the border, there is a minor random offset of between -0.1 to 0.1 to simulate a random bounce
-        if (centre.distance(regionCentre)  > circleRadius - radius - 4){
-            horizVX = -horizVX;
+    public void moveHorizontal(Double circleRadius, Point2D.Double regionCentre, Boolean initialDirection){
+        if(initialDirection){
+            centre.x += horizVX;
+            // on the colision with the border, there is a minor random offset of between -0.1 to 0.1 to simulate a random bounce
+            if (centre.distance(regionCentre)  > circleRadius - radius - 4 || centre.distance(regionCentre) < radius){
+                horizVX = -horizVX;
+            }
         }
+        else{
+            centre.x -= horizVX;
+            // on the colision with the border, there is a minor random offset of between -0.1 to 0.1 to simulate a random bounce
+            if (centre.distance(regionCentre)  > circleRadius - radius - 4 || centre.distance(regionCentre) < radius){
+                horizVX = -horizVX;
+            }
+        }
+
     }
 
     public Double getX(){

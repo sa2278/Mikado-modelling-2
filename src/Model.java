@@ -60,12 +60,12 @@ public class Model extends JPanel{
             double r = (radius - particleRadius - 4);
 
             // in this case the diameter of each circle is 125
-            double xObject1 = outerEdge.getCenterX();
+            double xObject1 = outerEdge.getCenterX() + particleRadius + 1;
             double yObject1 = outerEdge.getCenterY();
             particles.add(new Particle(new Point2D.Double(xObject1,yObject1), particleRadius));
 
 
-            double xObject2 = outerEdge.getCenterX();
+            double xObject2 = outerEdge.getCenterX() - particleRadius - 1;
             particles.add(new Particle(new Point2D.Double(xObject2,yObject1), particleRadius));
 
             System.out.println(xObject1 + " , " + yObject1 + " and " + xObject2 + " , " + yObject1);
@@ -211,8 +211,10 @@ public class Model extends JPanel{
                 }
             }
             else{
+                Boolean direction = Boolean.TRUE;
                 for(Particle particle : particles){
-                    particle.moveHorizontal(regionRadius, regionCentre);
+                    particle.moveHorizontal(regionRadius, regionCentre, direction);
+                    direction = !(direction);
                 }
 
             }
