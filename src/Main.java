@@ -19,6 +19,7 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1000, 1000);
         frame.setMinimumSize(new Dimension( 1000, 1000));
+        frame.setResizable(Boolean.FALSE);
         Model model = new Model();
         frame.add(model);
         frame.setVisible(true);
@@ -84,15 +85,9 @@ public class Main {
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-
-
-
             }
 
-
-
             }
-
         });
     }
 
