@@ -189,13 +189,13 @@ public class Model extends JPanel{
     }
 
     public Double calculateEntropy(){
-        int nLegal = 0;
+        double nLegal = 0;
         for(RayPaths ray : rays){
             if(ray.isDrawn){
                 nLegal += 1;
             }
         }
-        return Math.log(nLegal);
+        return nLegal / RAYS_NUM;
     }
 
     public void update(int batchSize, Boolean random){
