@@ -11,7 +11,7 @@ distance = []
 entropy = []
 
 # rename the file name to the latest csv output
-with open("Entropy_output2025-03-07_11-44-35_896.csv", 'r') as f:
+with open("Entropy_output_of_radius(100.0)_2025-03-13_18-50-57_815.csv", 'r') as f:
     reader = csv.reader(f)
     next(reader)
 
@@ -37,11 +37,13 @@ print("Coeficients: ", model.coefficients)
 
 
 
-#337
-myline2 = np.linspace(100, 337, num=50)
+#337 for 75 radius 
+#368 for 100 radius 
+cuttoff = 368
+myline2 = np.linspace(100, cuttoff, num=50)
 deriv = model.deriv()   
 
-# print("Roots: ", deriv.roots) 
+print("Turning points: ", deriv.roots) 
 # plt.plot(myline, -deriv(myline))   
 # plt.show() 
 
@@ -49,7 +51,7 @@ distanceRedux = []
 entropyRedux = []
 
 for distance, entropy in zip(distance, entropy): 
-    if distance < 337: 
+    if distance < cuttoff: 
         distanceRedux.append(distance) 
         entropyRedux.append(entropy)
 

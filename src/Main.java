@@ -70,7 +70,7 @@ public class Main {
                 ArrayList<Double> dists = new ArrayList<>(model.distances);
                 try{
                     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss_SS");
-                    FileWriter fileWriter = new FileWriter("Entropy_output" + formatter.format(new Date()) +".csv");
+                    FileWriter fileWriter = new FileWriter("Entropy_output_of_ radius(" + model.getParticleRadius() + ")_"+ formatter.format(new Date()) +".csv");
                     fileWriter.append("Distance,Log_Entropy");
                     fileWriter.append("\n");
                     for(int i = 0; i < dists.size(); i ++){

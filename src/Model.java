@@ -15,7 +15,8 @@ public class Model extends JPanel{
     public static final Color OBJECT_COLOR = Color.RED;
     public static final int PARTICLE_NUM = 2;
     private  JFrame frame;
-    double particleRadius = 75;
+    // double particleRadius = 75;
+    double particleRadius = 50;
     public boolean isPainted = Boolean.FALSE;
     public ArrayList<RayPaths> rays = new ArrayList<>();
     public ArrayList<Particle> particles = new ArrayList<>();
@@ -198,6 +199,10 @@ public class Model extends JPanel{
         return nLegal / RAYS_NUM;
     }
 
+    public double getParticleRadius() {
+        return particleRadius;
+    }
+
     public void update(int batchSize, Boolean random){
         Double regionRadius = (double) Math.min(this.getWidth(), this.getHeight()) / 2 - 10 * 2;
         for( int iter = 0; iter < batchSize; iter++){
@@ -256,5 +261,7 @@ public class Model extends JPanel{
 
     private double getRandomNumber(double min, double max) {
         return (double) ((Math.random() * (max - min)) + min);
-    }
+    } 
+
+    
 }
