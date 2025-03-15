@@ -180,12 +180,12 @@ public class Model extends JPanel{
                 g2.draw(particles.get(ob).particleAsCircle());
             }
             g2.setStroke(new BasicStroke(1));
-            System.out.println("after painting updated " + rays.size());
+            // System.out.println("after painting updated " + rays.size());
 
         }
         // TODO remove
         g2.setClip(new Ellipse2D.Double(padding, padding, radius * 2, radius * 2));
-        System.out.println("after painting " + rays.size());
+        //  System.out.println("after painting " + rays.size());
 
     }
 
