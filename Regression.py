@@ -11,8 +11,15 @@ from sklearn.preprocessing import PolynomialFeatures
 distance = []
 entropy = []
 
+#283 for 50
+#337 for 75 radius 
+#368 for 100 radius 
+cuttoff = 337 
+
 # rename the file name to the latest csv output 
-# Entropy_output2025-03-07_11-44-35_896.csv
+# Entropy_output_of_radius(50.0)_2025-03-13_19-16-24_29.csv
+# Entropy_output2025-03-07_11-44-35_896.csv  
+# Entropy_output_of_radius(100.0)_2025-03-13_18-50-57_815.csv
 with open("Entropy_output2025-03-07_11-44-35_896.csv", 'r') as f:
     reader = csv.reader(f)
     next(reader)
@@ -29,7 +36,9 @@ model = np.poly1d(np.polyfit(distance, entropy, 6))
 myline = np.linspace(100, 800, num=50) 
 
 plt.scatter(distance, entropy, s=1)
-plt.plot(myline, model(myline), color="red", markersize=2)
+plt.plot(myline, model(myline), color="red", markersize=2) 
+plt.xlabel("x") 
+plt.ylabel("entropy")
 plt.show()  
 coef = model.coefficients
 print("Coeficients: ", model.coefficients) 
@@ -38,10 +47,7 @@ print("Coeficients: ", model.coefficients)
 # print("Roots: ", model.roots)  
 
 
-#283 for 50
-#337 for 75 radius 
-#368 for 100 radius 
-cuttoff = 283
+
 myline2 = np.linspace(np.log(100), np.log(cuttoff), num=50)
 deriv = model.deriv()   
 
@@ -72,13 +78,16 @@ for distance, entropy in zip(distance, entropy):
 # plt.show()  
 
 logx = np.log(distanceRedux) 
-logy = np.log(entropyRedux)  
+logy = np.log(-deriv(entropyRedux))  
 myline2 = np.linspace(min(logx), max(logx), len(logx))
 coef = np.polyfit(logx, logy, deg=1)   
 plt.plot(myline2, coef[0] * myline2 + coef[1]) 
-plt.scatter(logx, logy) 
+plt.scatter(logx, logy)  
+plt.xlabel("log(x)") 
+plt.ylabel("log(-ds/dx)")
 plt.show()
 
-print(model2.coefficients)  
+print("x^6 coefficients ", model.coefficients)   
+print("linear coeficients", coef)
 
 
