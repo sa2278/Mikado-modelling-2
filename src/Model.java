@@ -16,7 +16,7 @@ public class Model extends JPanel{
     public static final int PARTICLE_NUM = 2;
     private  JFrame frame;
     // double particleRadius = 75;
-    double particleRadius = 50;
+    double particleRadius = 75;
     public boolean isPainted = Boolean.FALSE;
     public ArrayList<RayPaths> rays = new ArrayList<>();
     public ArrayList<Particle> particles = new ArrayList<>();
@@ -110,7 +110,7 @@ public class Model extends JPanel{
             }
 
             Double distance = particles.get(0).distance(particles.get(1));
-            Double entropy = calculateEntropy();
+            Double entropy = calculateEntropy(rays);
             distances.add(distance);
             entropies.add(entropy);
 
@@ -165,7 +165,7 @@ public class Model extends JPanel{
             }
 
             Double distance = particles.get(0).distance(particles.get(1));
-            Double entropy = calculateEntropy();
+            Double entropy = calculateEntropy(rays);
             distances.add(distance);
             entropies.add(entropy);
 
@@ -189,14 +189,29 @@ public class Model extends JPanel{
 
     }
 
-    public Double calculateEntropy(){
+    public Double calculateEntropy(ArrayList<RayPaths> rayPaths){
         double nLegal = 0;
-        for(RayPaths ray : rays){
+        for(RayPaths ray : rayPaths){
             if(ray.isDrawn){
                 nLegal += 1;
             }
         }
         return nLegal / RAYS_NUM;
+    }
+
+    public ArrayList<Double> calculateGradients(ArrayList<Double> entropies, ArrayList<Double> distances){
+        ArrayList<Double> gradients =  new ArrayList<>();
+        for(int i = 0; i < entropies.size() - 1; i++){
+            Double ds = entropies.get(i + 1) - entropies.get(i);
+            Double dx = distances.get(i + 1) - distances.get(i);
+            Double midpoint = distances.get(i) + (dx / 2);
+            Double gradient = ds / dx;
+            if (gradient < 0){
+                gradients.add(gradient);
+            }
+
+        }
+        return gradients;
     }
 
     public double getParticleRadius() {
@@ -227,7 +242,7 @@ public class Model extends JPanel{
 
 
             double index = getRandomNumber(0, RAYS_NUM - 1);
-            System.out.println("in update" + rays.size());
+            // For line debug System.out.println("in update" + rays.size());
 
             RayPaths currentRay = rays.get((int)index);
             Line2D temp = new Line2D.Double(currentRay.startPoint.getX(), currentRay.startPoint.getY(), currentRay.endPoint.getX(), currentRay.endPoint.getY());

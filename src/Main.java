@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Enter the step size");
         //int stepSize = Integer.parseInt(System.console().readLine());
-        int stepSize = 10;
+        int stepSize = 1;
         JFrame frame = new JFrame();
 
 
@@ -68,19 +68,10 @@ public class Main {
             if (e.getKeyCode() == KeyEvent.VK_SPACE){
                 ArrayList<Double> entropy = new ArrayList<>(model.entropies);
                 ArrayList<Double> dists = new ArrayList<>(model.distances);
+                ArrayList<Double> gradients = new ArrayList<>(model.calculateGradients(entropy, dists));
                 try{
                     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss_SS");
-                    FileWriter fileWriter = new FileWriter("Entropy_output_of_ radius(" + model.getParticleRadius() + ")_"+ formatter.format(new Date()) +".csv");
-                    fileWriter.append("Distance,Log_Entropy");
-                    fileWriter.append("\n");
-                    for(int i = 0; i < dists.size(); i ++){
-                        fileWriter.append(String.valueOf(dists.get(i)));
-                        fileWriter.append(",");
-                        fileWriter.append(String.valueOf(entropy.get(i)));
-                        fileWriter.append("\n");
-
-
-                    }
+                    FileWriter fileWriter = getFileWriter(dists, entropy, gradients, model);
                     fileWriter.close();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -89,6 +80,19 @@ public class Main {
 
             }
         });
+    }
+
+    private static FileWriter getFileWriter(ArrayList<Double> dists, ArrayList<Double> entropy, ArrayList<Double> grad, Model model) throws IOException {
+        FileWriter fileWriter = new FileWriter("Entropy_output_of_radius(" + model.getParticleRadius() + ")" + ".csv");
+        fileWriter.append("Distance,Entropy");
+        fileWriter.append("\n");
+        for(int i = 0; i < dists.size(); i ++){
+            fileWriter.append(String.valueOf(dists.get(i)));
+            fileWriter.append(",");
+            fileWriter.append(String.valueOf(entropy.get(i)));
+            fileWriter.append("\n");
+        }
+        return fileWriter;
     }
 
 

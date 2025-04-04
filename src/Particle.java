@@ -7,7 +7,7 @@ public class Particle {
     private double vx, vy;
     private Double radius;
     private Random rand = new Random();
-    private Double horizVX = 0.5;
+    private Double horizVX = 1.0;
 
     public Particle(Point2D.Double centre, Double radius){
         this.centre = centre;
