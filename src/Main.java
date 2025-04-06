@@ -23,8 +23,7 @@ public class Main {
         Model model = new Model();
         frame.add(model);
         frame.setVisible(true);
-        // TODO remove this
-        // System.out.println("in main " + model.rays.size());
+
 
         frame.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
@@ -83,7 +82,7 @@ public class Main {
     }
 
     private static FileWriter getFileWriter(ArrayList<Double> dists, ArrayList<Double> entropy, ArrayList<Double> grad, Model model) throws IOException {
-        FileWriter fileWriter = new FileWriter("Entropy_output_of_radius(" + model.getParticleRadius() + ")" + ".csv");
+        FileWriter fileWriter = new FileWriter("Entropy_output_of_radius(1milli)(" + model.getParticleRadius() + ")" + ".csv");
         fileWriter.append("Distance,Entropy");
         fileWriter.append("\n");
         for(int i = 0; i < dists.size(); i ++){

@@ -8,7 +8,7 @@ import java.util.Random;
 import javax.swing.*;
 
 public class Model extends JPanel{
-    public static final int RAYS_NUM = 100000;
+    public static final int RAYS_NUM = 1000000;
     public static final Color POINT_COLOR = Color.RED;
     public static final Color LINE_COLOR_DRAWN = Color.BLACK;
     public static final Color LINE_COLOR_UNDRAWN = Color.GRAY;
