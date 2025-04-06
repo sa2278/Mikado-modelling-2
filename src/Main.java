@@ -32,6 +32,14 @@ public class Main {
                 model.update(stepSize, Boolean.FALSE);
                 frame.repaint();
             }
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT){
+                model.update(stepSize, Boolean.FALSE);
+                frame.repaint();
+            }
+            if (e.getKeyCode() == KeyEvent.VK_LEFT){
+                model.update(stepSize, Boolean.FALSE);
+                frame.repaint();
+            }
             if (e.getKeyCode() == KeyEvent.VK_E){
                 model.update(stepSize, Boolean.TRUE);
                 frame.repaint();
@@ -82,7 +90,7 @@ public class Main {
     }
 
     private static FileWriter getFileWriter(ArrayList<Double> dists, ArrayList<Double> entropy, ArrayList<Double> grad, Model model) throws IOException {
-        FileWriter fileWriter = new FileWriter("Entropy_output_of_radius(1milli)(" + model.getParticleRadius() + ")" + ".csv");
+        FileWriter fileWriter = new FileWriter("Entropy_output_of_radius(1milli)(1000)(" + model.getParticleRadius() + ")" + ".csv");
         fileWriter.append("Distance,Entropy");
         fileWriter.append("\n");
         for(int i = 0; i < dists.size(); i ++){

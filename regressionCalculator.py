@@ -18,27 +18,24 @@ entropy = []
 cuttoff = 337   
 
 print("over 1000 steps the models variation is") 
-n75 = "Entropy_output2025-03-07_11-44-35_896.csv"  
+n75 = "Entropy_output_of_radius(1milli)(1000)(75.0).csv"  
 data = np.genfromtxt(n75, delimiter=',', skip_header=1)
 distance = data[:, 0] 
-entropy = data[:, 1] 
+entropy = data[:, 1]  
+plt.scatter(distance, entropy, s=10, marker="x") 
+plt.show()
 print(np.var(data, axis=0)) 
 
 # rename the file name to the latest csv output 
 # n50 = "Entropy_output_of_radius(50.0)_2025-03-13_19-16-24_29.csv"
 # n75 = "Entropy_output2025-03-07_11-44-35_896.csv"  
 # n100 = "Entropy_output_of_radius(100.0)_2025-03-13_18-50-57_815.csv"  
-n75 = "Entropy_output_of_radius(1milli)(75.0).csv"
-
+n75 = "Entropy_output_of_radius(1milli)(1000)(75.0).csv"
 data = np.genfromtxt(n75, delimiter=',', skip_header=1)
-
 distance = data[:, 0] 
 entropy = data[:, 1]
-
-
 distanceReduced = [] 
 entropyReduced = []
-
 distEnt = np.column_stack((distance,entropy))  
 distEnt = distEnt[distEnt[:,0].argsort()]  
 line = np.poly1d(np.polyfit(distance, entropy, 4)) 
@@ -122,5 +119,10 @@ plt.ylabel("Ln(-dS/dx)")
 plt.show()
 print(coef[1] , "x + " , coef[0]) 
 
-
+with open('readme.txt', 'a') as f: 
+    f.write('\n') 
+    f.write(str(coef[1])) 
+    f.write("x + ") 
+    f.write(str(coef[0]))
+    f.write('\n') 
 

@@ -4,6 +4,7 @@ import java.awt.geom.*;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.*;
 
@@ -74,13 +75,12 @@ public class Model extends JPanel{
 
 
             for (int i = 0; i < RAYS_NUM; i++) {
-                Random rand = new Random();
-                double angle = Math.random() * 2 * Math.PI;
-                r = radius * Math.sqrt(Math.random());
+                double angle = ThreadLocalRandom.current().nextDouble() * 2 * Math.PI;
+                r = radius * Math.sqrt(ThreadLocalRandom.current().nextDouble());
                 double x = r * Math.cos(angle) + radius + padding;
                 double y = r * Math.sin(angle) + radius + padding;
 
-                double angle2 = Math.random() * 2 * Math.PI ;
+                double angle2 = ThreadLocalRandom.current().nextDouble() * 2 * Math.PI ;
                 Point2D.Double start = new Point2D.Double(x + 1000 * Math.cos(angle2), y + 1000 * Math.sin(angle2));
                 Point2D.Double end = new Point2D.Double((x - 1000 * Math.cos(angle2)), (y - 1000* Math.sin(angle2)));
                 Line2D temp = new Line2D.Double(start.getX(), start.getY(), end.getX(), end.getY());
@@ -129,13 +129,12 @@ public class Model extends JPanel{
         else{
             rays.clear();
             for (int i = 0; i < RAYS_NUM; i++) {
-                Random rand = new Random();
-                double angle = Math.random() * 2 * Math.PI ;
-                double r = radius * Math.sqrt(Math.random());
+                double angle = ThreadLocalRandom.current().nextDouble() * 2 * Math.PI ;
+                double r = radius * Math.sqrt(ThreadLocalRandom.current().nextDouble());
                 double x = r * Math.cos(angle) + radius + padding;
                 double y = r * Math.sin(angle) + radius + padding;
 
-                double angle2 = Math.random() * 2 * Math.PI ;
+                double angle2 = ThreadLocalRandom.current().nextDouble() * 2 * Math.PI ;
                 Point2D.Double start = new Point2D.Double(x + 1000 * Math.cos(angle2), y + 1000 * Math.sin(angle2));
                 Point2D.Double end = new Point2D.Double((x - 1000 * Math.cos(angle2)), (y - 1000* Math.sin(angle2)));
                 Line2D temp = new Line2D.Double(start.getX(), start.getY(), end.getX(), end.getY());
