@@ -90,7 +90,14 @@ public class Main {
     }
 
     private static FileWriter getFileWriter(ArrayList<Double> dists, ArrayList<Double> entropy, ArrayList<Double> grad, Model model) throws IOException {
-        FileWriter fileWriter = new FileWriter("Entropy_output_of_radius(1milli)(1000)(" + model.getParticleRadius() + ")" + ".csv");
+
+        File file = new File("entropy_vs_distance.csv");
+        int ind = 1;
+        while(file.createNewFile() == Boolean.FALSE){
+            file = new File("entropy_vs_distance" + ind + ".csv");
+            ind += 1;
+        }
+        FileWriter fileWriter = new FileWriter(file.getCanonicalPath());
         fileWriter.append("Distance,Entropy");
         fileWriter.append("\n");
         for(int i = 0; i < dists.size(); i ++){
