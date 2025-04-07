@@ -22,7 +22,7 @@ cuttoff = 337
 
 # rename the file name to the latest csv output 
 # n = "Entropy_output_of_radius(50.0)_2025-03-13_19-16-24_29.csv"
-n = "Entropy_output2025-03-07_11-44-35_896.csv"  
+# n = "Entropy_output2025-03-07_11-44-35_896.csv"
 # n = "Entropy_output_of_radius(100.0)_2025-03-13_18-50-57_815.csv"
 with open(n, 'r') as f:
     reader = csv.reader(f)
