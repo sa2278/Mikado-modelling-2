@@ -109,10 +109,10 @@ public class Model extends JPanel{
                 }
             }
 
-            Double distance = particles.get(0).distance(particles.get(1));
-            Double entropy = calculateEntropy(rays);
-            distances.add(distance);
-            entropies.add(entropy);
+            //Double distance = particles.get(0).distance(particles.get(1));
+            //Double entropy = calculateEntropy(rays);
+            //distances.add(distance);
+            //entropies.add(entropy);
 
             g2.setStroke(new BasicStroke(4));
             g2.setColor(Color.BLACK);

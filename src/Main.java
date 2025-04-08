@@ -1,11 +1,15 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.io.*;
+// import java.util.Timer;
 
 import javax.swing.*;
+import javax.swing.Timer;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,8 +17,6 @@ public class Main {
         //int stepSize = Integer.parseInt(System.console().readLine());
         int stepSize = 1;
         JFrame frame = new JFrame();
-
-
         JLayeredPane layeredPane = new JLayeredPane();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1000, 1000);
@@ -23,7 +25,6 @@ public class Main {
         Model model = new Model();
         frame.add(model);
         frame.setVisible(true);
-
 
         frame.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
@@ -40,23 +41,40 @@ public class Main {
                 model.update(stepSize, Boolean.FALSE);
                 frame.repaint();
             }
-            if (e.getKeyCode() == KeyEvent.VK_E){
-                model.update(stepSize, Boolean.TRUE);
-                frame.repaint();
-            }
-            if (e.getKeyCode() == KeyEvent.VK_A){
-                int loopCount = 1000;
-                for(int i = 0; i < loopCount; i++){
-                    model.update(stepSize, Boolean.FALSE);
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                    frame.repaint();
-                    System.out.println(i + " " + model.entropies.get(0) + "\n");
 
-                }
+            if (e.getKeyCode() == KeyEvent.VK_A){
+                int loopCount = 308;
+                int[] iter = {0};
+                Timer timer = new Timer(100, new ActionListener(){
+                    @Override
+                    public void actionPerformed(ActionEvent e){
+                        if(iter[0] < loopCount){
+                            model.update(stepSize, Boolean.FALSE);
+                            frame.repaint();
+                            iter[0]++;
+                        }
+                        else {
+                            ((Timer) e.getSource()).stop();
+                            ArrayList<Double> entropy = new ArrayList<>(model.entropies);
+                            ArrayList<Double> dists = new ArrayList<>(model.distances);
+                            ArrayList<Double> gradients = new ArrayList<>(model.calculateGradients(entropy, dists));
+                            try{
+                                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss_SS");
+                                FileWriter fileWriter = getFileWriter(dists, entropy, gradients, model);
+                                fileWriter.close();
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        }
+                    }
+
+                });
+                timer.start();
+
+
+
+
+
             }
 
             if (e.getKeyCode() == KeyEvent.VK_D){
