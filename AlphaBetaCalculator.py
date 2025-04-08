@@ -46,7 +46,7 @@ coef = np.polynomial.polynomial.polyfit(np.log(gradients[:, 0]), np.log(negGrads
 logbeta.append(coef[0])  
 alpha.append(coef[1]) 
 
-for i in range(1,31):  
+for i in range(1,10):  
     distance = []
     entropy = [] 
     n75 = str("entropy_vs_distance" + str(i) + ".csv")
@@ -81,8 +81,8 @@ for i in range(1,31):
     logbeta.append(coef[0])  
     alpha.append(coef[1])  
 
-plt.hist(alpha, color='blue', ec='black', bins=20) 
+plt.hist(alpha, color='blue', ec='black', bins=40) 
 plt.show() 
 
-plt.hist(logbeta, color='blue', ec='black', bins=20) 
+plt.hist(logbeta, color='blue', ec='black', bins=40) 
 plt.show()

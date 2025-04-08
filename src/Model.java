@@ -9,7 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.*;
 
 public class Model extends JPanel{
-    public static final int RAYS_NUM = 1000000;
+    public static final int RAYS_NUM = 100000;
     public static final Color POINT_COLOR = Color.RED;
     public static final Color LINE_COLOR_DRAWN = Color.BLACK;
     public static final Color LINE_COLOR_UNDRAWN = Color.GRAY;
@@ -96,7 +96,7 @@ public class Model extends JPanel{
 
             }
             // this is limited to 1000 for processing purposes
-            for (int k = 0; k < 1000; k++) {
+            for (int k = 0; k < RAYS_NUM; k++) {
                 RayPaths ray = rays.get(k);
                 Line2D temp = new Line2D.Double(ray.startPoint.getX(), ray.getStartPoint().getY(), ray.getEndPoint().getX(), ray.getEndPoint().getY());
                 if (ray.isDrawn == Boolean.TRUE){
@@ -147,10 +147,9 @@ public class Model extends JPanel{
                     currentRay.setDrawn(Boolean.TRUE);
                 }
                 rays.add(currentRay);
-
             }
 
-            for (int k = 0; k < 1000; k++) {
+            for (int k = 0; k < RAYS_NUM; k++) {
                 RayPaths ray = rays.get(k);
                 Line2D temp = new Line2D.Double(ray.startPoint.getX(), ray.getStartPoint().getY(), ray.getEndPoint().getX(), ray.getEndPoint().getY());
                 if (ray.isDrawn == Boolean.TRUE){

@@ -43,7 +43,7 @@ public class Main {
             }
 
             if (e.getKeyCode() == KeyEvent.VK_A){
-                int loopCount = 308;
+                int loopCount = 306;
                 int[] iter = {0};
                 Timer timer = new Timer(100, new ActionListener(){
                     @Override
