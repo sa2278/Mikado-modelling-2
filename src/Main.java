@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Enter the step size");
         //int stepSize = Integer.parseInt(System.console().readLine());
-        int stepSize = 1;
+        int stepSize = 5;
         JFrame frame = new JFrame();
         JLayeredPane layeredPane = new JLayeredPane();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,7 +43,7 @@ public class Main {
             }
 
             if (e.getKeyCode() == KeyEvent.VK_A){
-                int loopCount = 306;
+                int loopCount = 62;
                 int[] iter = {0};
                 Timer timer = new Timer(100, new ActionListener(){
                     @Override

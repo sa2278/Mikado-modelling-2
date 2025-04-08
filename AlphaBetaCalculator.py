@@ -11,10 +11,10 @@ from sklearn.preprocessing import PolynomialFeatures
 import collections
 distance = []
 entropy = [] 
-alpha = [] 
-logbeta = []  
+beta = [] 
+alpha = []   
 
-n75 = "entropy_vs_distance.csv"
+n75 = "out_1,000,000_rays\entropy_vs_distance.csv"
 data = np.genfromtxt(n75, delimiter=',', skip_header=1)
 distance = data[:, 0] 
 entropy = data[:, 1]
@@ -43,13 +43,13 @@ for i in range(len(entropyReduced) - 1):
 gradients = np.array(gradients) 
 negGrads = np.negative(gradients[:, 1])  
 coef = np.polynomial.polynomial.polyfit(np.log(gradients[:, 0]), np.log(negGrads), 1) 
-logbeta.append(coef[0])  
-alpha.append(coef[1]) 
+alpha.append(coef[0])  
+beta.append(coef[1]) 
 
-for i in range(1,10):  
+for i in range(1,101):  
     distance = []
     entropy = [] 
-    n75 = str("entropy_vs_distance" + str(i) + ".csv")
+    n75 = str("out_1,000,000_rays\entropy_vs_distance" + str(i) + ".csv")
     data = np.genfromtxt(n75, delimiter=',', skip_header=1)
     distance = data[:, 0] 
     entropy = data[:, 1]
@@ -78,11 +78,14 @@ for i in range(1,10):
     gradients = np.array(gradients) 
     negGrads = np.negative(gradients[:, 1])  
     coef = np.polynomial.polynomial.polyfit(np.log(gradients[:, 0]), np.log(negGrads), 1) 
-    logbeta.append(coef[0])  
-    alpha.append(coef[1])  
+    alpha.append(np.exp(coef[0]))  
+    beta.append(coef[1])  
+
+plt.hist(beta, color='blue', ec='black', bins=40) 
+plt.show() 
 
 plt.hist(alpha, color='blue', ec='black', bins=40) 
 plt.show() 
 
-plt.hist(logbeta, color='blue', ec='black', bins=40) 
-plt.show()
+print(np.nanmean(beta, axis=0)) 
+print(np.nanmean(alpha, axis = 0))

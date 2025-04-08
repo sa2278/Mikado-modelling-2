@@ -9,7 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.*;
 
 public class Model extends JPanel{
-    public static final int RAYS_NUM = 100000;
+    public static final int RAYS_NUM = 1000000;
     public static final Color POINT_COLOR = Color.RED;
     public static final Color LINE_COLOR_DRAWN = Color.BLACK;
     public static final Color LINE_COLOR_UNDRAWN = Color.GRAY;
@@ -44,8 +44,8 @@ public class Model extends JPanel{
         g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 
         double padding = 10;
-        radius = (double) Math.min(this.getWidth(), this.getHeight()) / 2 - padding * 2;
-
+        // radius = (double) Math.min(this.getWidth(), this.getHeight()) / 2 - padding * 2;
+        radius = (double) Math.min(this.getWidth(), this.getHeight()) / 2 - padding * 2;;
         outerEdge = new Ellipse2D.Double(padding, padding, radius * 2, radius * 2);
         g2.setStroke(new BasicStroke(4));
         g2.draw(outerEdge);
@@ -96,7 +96,7 @@ public class Model extends JPanel{
 
             }
             // this is limited to 1000 for processing purposes
-            for (int k = 0; k < RAYS_NUM; k++) {
+            for (int k = 0; k < 1000; k++) {
                 RayPaths ray = rays.get(k);
                 Line2D temp = new Line2D.Double(ray.startPoint.getX(), ray.getStartPoint().getY(), ray.getEndPoint().getX(), ray.getEndPoint().getY());
                 if (ray.isDrawn == Boolean.TRUE){
@@ -149,7 +149,7 @@ public class Model extends JPanel{
                 rays.add(currentRay);
             }
 
-            for (int k = 0; k < RAYS_NUM; k++) {
+            for (int k = 0; k < 1000; k++) {
                 RayPaths ray = rays.get(k);
                 Line2D temp = new Line2D.Double(ray.startPoint.getX(), ray.getStartPoint().getY(), ray.getEndPoint().getX(), ray.getEndPoint().getY());
                 if (ray.isDrawn == Boolean.TRUE){
@@ -236,38 +236,6 @@ public class Model extends JPanel{
                 }
 
             }
-
-
-
-            double index = getRandomNumber(0, RAYS_NUM - 1);
-            // For line debug System.out.println("in update" + rays.size());
-
-            RayPaths currentRay = rays.get((int)index);
-            Line2D temp = new Line2D.Double(currentRay.startPoint.getX(), currentRay.startPoint.getY(), currentRay.endPoint.getX(), currentRay.endPoint.getY());
-            // check if there is any collision
-
-            if(currentRay.getDrawn() == Boolean.TRUE){
-                currentRay.setDrawn(Boolean.FALSE);
-            }
-            else{
-                for (int j = 0; j < PARTICLE_NUM; j++){
-                    if(Math.abs(temp.ptLineDist(particles.get(j).getX(), particles.get(j).getY())) < particleRadius){
-                        currentRay.setDrawn(Boolean.FALSE);
-                        break;
-                    }
-                    currentRay.setDrawn(Boolean.TRUE);
-                }
-
-            }
-            for (int j = 0; j < PARTICLE_NUM; j++){
-                for(RayPaths checkRays : rays){
-                    Line2D checkLine = new Line2D.Double(checkRays.startPoint.getX(), checkRays.startPoint.getY(), checkRays.endPoint.getX(), checkRays.endPoint.getY());
-                    if(Math.abs(checkLine.ptLineDist(particles.get(j).getX(), particles.get(j).getY())) < particleRadius){
-                        checkRays.setDrawn(Boolean.FALSE);
-                    }
-                }
-            }
-
 
         }
     }
