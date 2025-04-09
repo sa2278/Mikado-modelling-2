@@ -30,7 +30,7 @@ print(np.var(data, axis=0))
 # n50 = "Entropy_output_of_radius(50.0)_2025-03-13_19-16-24_29.csv"
 # n75 = "Entropy_output2025-03-07_11-44-35_896.csv"  
 # n100 = "Entropy_output_of_radius(100.0)_2025-03-13_18-50-57_815.csv"  
-n75 = "entropy_vs_distance26.csv"
+n75 = "out_1,000,000_rays_step_size_2\entropy_vs_distance1.csv"
 data = np.genfromtxt(n75, delimiter=',', skip_header=1)
 distance = data[:, 0] 
 entropy = data[:, 1]
