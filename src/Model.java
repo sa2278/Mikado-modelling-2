@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.*;
 import java.awt.geom.Line2D;
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -194,6 +195,7 @@ public class Model extends JPanel{
                 nLegal += 1;
             }
         }
+        System.out.println(nLegal);
         return nLegal / RAYS_NUM;
     }
 

@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Enter the step size");
         //int stepSize = Integer.parseInt(System.console().readLine());
-        int stepSize = 5;
+        int stepSize = 2;
         JFrame frame = new JFrame();
         JLayeredPane layeredPane = new JLayeredPane();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,7 +43,7 @@ public class Main {
             }
 
             if (e.getKeyCode() == KeyEvent.VK_A){
-                int loopCount = 62;
+                int loopCount = 153;
                 int[] iter = {0};
                 Timer timer = new Timer(100, new ActionListener(){
                     @Override
@@ -75,20 +75,6 @@ public class Main {
 
 
 
-            }
-
-            if (e.getKeyCode() == KeyEvent.VK_D){
-                int loopCount = 1000;
-                for(int i = 0; i < loopCount; i++){
-                    model.update(stepSize, Boolean.TRUE);
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                    frame.repaint();
-
-                }
             }
             if (e.getKeyCode() == KeyEvent.VK_SPACE){
                 ArrayList<Double> entropy = new ArrayList<>(model.entropies);
