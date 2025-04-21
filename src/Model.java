@@ -2,9 +2,7 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.*;
 import java.awt.geom.Line2D;
-import java.io.Console;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.*;
@@ -17,7 +15,6 @@ public class Model extends JPanel{
     public static final Color OBJECT_COLOR = Color.RED;
     public static final int PARTICLE_NUM = 2;
     private  JFrame frame;
-    // double particleRadius = 75;
     double particleRadius = 75;
     public boolean isPainted = Boolean.FALSE;
     public ArrayList<RayPaths> rays = new ArrayList<>();
@@ -45,7 +42,6 @@ public class Model extends JPanel{
         g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 
         double padding = 10;
-        // radius = (double) Math.min(this.getWidth(), this.getHeight()) / 2 - padding * 2;
         radius = (double) Math.min(this.getWidth(), this.getHeight()) / 2 - padding * 2;;
         outerEdge = new Ellipse2D.Double(padding, padding, radius * 2, radius * 2);
         g2.setStroke(new BasicStroke(4));
@@ -56,8 +52,6 @@ public class Model extends JPanel{
 
         if(isPainted == Boolean.FALSE){
             double currentSect = 0;
-            // g2.setStroke(new BasicStroke(4));
-
             // the new objects must not exist outside of the defined area, so the object diameter is subtracted
 
             double r = (radius - particleRadius - 4);
@@ -72,8 +66,6 @@ public class Model extends JPanel{
             particles.add(new Particle(new Point2D.Double(xObject2,yObject1), particleRadius));
 
             System.out.println(xObject1 + " , " + yObject1 + " and " + xObject2 + " , " + yObject1);
-            // g2.setStroke(new BasicStroke(1));
-
 
             for (int i = 0; i < RAYS_NUM; i++) {
                 double angle = ThreadLocalRandom.current().nextDouble() * 2 * Math.PI;
@@ -110,10 +102,6 @@ public class Model extends JPanel{
                 }
             }
 
-            //Double distance = particles.get(0).distance(particles.get(1));
-            //Double entropy = calculateEntropy(rays);
-            //distances.add(distance);
-            //entropies.add(entropy);
 
             g2.setStroke(new BasicStroke(4));
             g2.setColor(Color.BLACK);
@@ -179,12 +167,12 @@ public class Model extends JPanel{
                 g2.draw(particles.get(ob).particleAsCircle());
             }
             g2.setStroke(new BasicStroke(1));
-            // System.out.println("after painting updated " + rays.size());
+
 
         }
         // TODO remove
         g2.setClip(new Ellipse2D.Double(padding, padding, radius * 2, radius * 2));
-        //  System.out.println("after painting " + rays.size());
+
 
     }
 
@@ -197,25 +185,6 @@ public class Model extends JPanel{
         }
         System.out.println(nLegal);
         return nLegal / RAYS_NUM;
-    }
-
-    public ArrayList<Double> calculateGradients(ArrayList<Double> entropies, ArrayList<Double> distances){
-        ArrayList<Double> gradients =  new ArrayList<>();
-        for(int i = 0; i < entropies.size() - 1; i++){
-            Double ds = entropies.get(i + 1) - entropies.get(i);
-            Double dx = distances.get(i + 1) - distances.get(i);
-            Double midpoint = distances.get(i) + (dx / 2);
-            Double gradient = ds / dx;
-            if (gradient < 0){
-                gradients.add(gradient);
-            }
-
-        }
-        return gradients;
-    }
-
-    public double getParticleRadius() {
-        return particleRadius;
     }
 
     public void update(int batchSize, Boolean random){

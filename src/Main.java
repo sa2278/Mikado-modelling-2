@@ -57,10 +57,9 @@ public class Main {
                             ((Timer) e.getSource()).stop();
                             ArrayList<Double> entropy = new ArrayList<>(model.entropies);
                             ArrayList<Double> dists = new ArrayList<>(model.distances);
-                            ArrayList<Double> gradients = new ArrayList<>(model.calculateGradients(entropy, dists));
                             try{
                                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss_SS");
-                                FileWriter fileWriter = getFileWriter(dists, entropy, gradients, model);
+                                FileWriter fileWriter = getFileWriter(dists, entropy);
                                 fileWriter.close();
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
@@ -79,10 +78,10 @@ public class Main {
             if (e.getKeyCode() == KeyEvent.VK_SPACE){
                 ArrayList<Double> entropy = new ArrayList<>(model.entropies);
                 ArrayList<Double> dists = new ArrayList<>(model.distances);
-                ArrayList<Double> gradients = new ArrayList<>(model.calculateGradients(entropy, dists));
+
                 try{
                     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss_SS");
-                    FileWriter fileWriter = getFileWriter(dists, entropy, gradients, model);
+                    FileWriter fileWriter = getFileWriter(dists, entropy);
                     fileWriter.close();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -93,7 +92,7 @@ public class Main {
         });
     }
 
-    private static FileWriter getFileWriter(ArrayList<Double> dists, ArrayList<Double> entropy, ArrayList<Double> grad, Model model) throws IOException {
+    private static FileWriter getFileWriter(ArrayList<Double> dists, ArrayList<Double> entropy) throws IOException {
 
         File file = new File("entropy_vs_distance.csv");
         int ind = 1;
