@@ -12,7 +12,10 @@ import collections
 distance = []
 entropy = [] 
 beta = [] 
-alpha = []   
+alpha = []    
+error = []  
+corr = []
+
 
 n75 = 'out_1,000,000_rays_step_size_2\entropy_vs_distance.csv'
 data = np.genfromtxt(n75, delimiter=',', skip_header=1)
@@ -44,7 +47,21 @@ gradients = np.array(gradients)
 negGrads = np.negative(gradients[:, 1])  
 coef = np.polynomial.polynomial.polyfit(np.log(gradients[:, 0]), np.log(negGrads), 1) 
 alpha.append(coef[0])  
-beta.append(coef[1]) 
+beta.append(coef[1])  
+
+y = np.log(negGrads) 
+x = np.log(gradients[:, 0]) 
+n = negGrads.size 
+
+residuals =  np.log(negGrads) - (coef[0] + coef[1] * np.log(gradients[:, 0]))  
+sse = np.sum(residuals**2) 
+sst = np.sum( (y - np.mean(y))**2 ) 
+sst_x = np.sum( (x - np.mean(x))**2 ) 
+r_squared = 1 - sse/sst
+r = np.sqrt( r_squared ) 
+s = np.sqrt(sse/(n-2))  
+error.append(s) 
+corr.append(r)
 
 for i in range(1,101):  
     distance = []
@@ -79,7 +96,21 @@ for i in range(1,101):
     negGrads = np.negative(gradients[:, 1])  
     coef = np.polynomial.polynomial.polyfit(np.log(gradients[:, 0]), np.log(negGrads), 1) 
     alpha.append(coef[0])  
-    beta.append(coef[1])  
+    beta.append(coef[1])    
+
+    y = np.log(negGrads) 
+    x = np.log(gradients[:, 0]) 
+    n = negGrads.size 
+
+    residuals =  np.log(negGrads) - (coef[0] + coef[1] * np.log(gradients[:, 0]))  
+    sse = np.sum(residuals**2) 
+    sst = np.sum( (y - np.mean(y))**2 ) 
+    sst_x = np.sum( (x - np.mean(x))**2 ) 
+    r_squared = 1 - sse/sst
+    r = np.sqrt( r_squared ) 
+    s = np.sqrt(sse/(n-2))  
+    error.append(s) 
+    corr.append(r)
 
 plt.hist(beta, color='blue', ec='black', bins=40)  
 plt.xlabel("beta") 
@@ -91,5 +122,17 @@ plt.xlabel("log(alpha)")
 plt.ylabel("frequency")
 plt.show() 
 
-print(np.nanmean(beta, axis=0)) 
-print(np.nanmean(alpha, axis = 0))
+print("beta = ", np.nanmean(beta, axis=0)) 
+print("alpha = ", np.nanmean(alpha, axis = 0))   
+print("mean error = ", np.nanmean(error, axis=0)) 
+print("mean correlation = ", np.nanmean(corr, axis=0)) 
+
+plt.hist(error, color='blue', ec='black', bins=40)  
+plt.xlabel("error") 
+plt.ylabel("frequency")
+plt.show()  
+
+plt.hist(corr, color='blue', ec='black', bins=40)  
+plt.xlabel("corr") 
+plt.ylabel("frequency")
+plt.show() 
