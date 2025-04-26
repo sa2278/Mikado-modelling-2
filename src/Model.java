@@ -14,7 +14,6 @@ public class Model extends JPanel{
     public static final Color LINE_COLOR_UNDRAWN = Color.GRAY;
     public static final Color OBJECT_COLOR = Color.RED;
     public static final int PARTICLE_NUM = 2;
-    private  JFrame frame;
     double particleRadius = 75;
     public boolean isPainted = Boolean.FALSE;
     public ArrayList<RayPaths> rays = new ArrayList<>();
@@ -52,10 +51,7 @@ public class Model extends JPanel{
 
         if(isPainted == Boolean.FALSE){
             double currentSect = 0;
-            // the new objects must not exist outside of the defined area, so the object diameter is subtracted
-
             double r = (radius - particleRadius - 4);
-
             // in this case the diameter of each circle is 125
             double xObject1 = outerEdge.getCenterX() + particleRadius + 1;
             double yObject1 = outerEdge.getCenterY();
@@ -190,7 +186,7 @@ public class Model extends JPanel{
     public void update(int batchSize, Boolean random){
         Double regionRadius = (double) Math.min(this.getWidth(), this.getHeight()) / 2 - 10 * 2;
         for( int iter = 0; iter < batchSize; iter++){
-            // update selects a random ray from the rays and flips update if it is not intersecting
+            // update moves the particle by the stepsize batchsize times
             double centreX = outerEdge.getCenterX();
             double centreY = outerEdge.getCenterY();
             Point2D.Double regionCentre =  new Point2D.Double(centreX, centreY);
